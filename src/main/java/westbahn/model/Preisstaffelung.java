@@ -6,7 +6,7 @@ import javax.persistence.Id;
 
 public class Preisstaffelung {
 
-	private static Long serialVersionUID;
+	private static long serialVersionUID;
 
 	private float grossGepaeck = 1.02f;
 

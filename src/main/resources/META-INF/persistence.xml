@@ -10,7 +10,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/westbahn" />
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/westbahn?useSSL=false&amp;serverTimezone=UTC&amp;createDatabaseIfNotExist=true&amp;useUnicode=yes&amp;characterEncoding=UTF-8" />
       <property name="javax.persistence.jdbc.user" value="westbahnUser" />
       <property name="javax.persistence.jdbc.password" value="westbahnPassword" />
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />

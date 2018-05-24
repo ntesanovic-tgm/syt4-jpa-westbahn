@@ -6,7 +6,8 @@ import javax.persistence.Id;
 
 public class Strecke {
 
-	private Long ID;
+	@Id
+	private long ID;
 
 	private Bahnhof start;
 

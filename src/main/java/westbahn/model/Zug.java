@@ -5,7 +5,9 @@ import javax.persistence.Id;
 import java.util.Date;
 
 public class Zug {
-	private Long ID;
+
+	@Id
+	private long ID;
 
 	private Date startZeit;
 

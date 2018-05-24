@@ -7,7 +7,8 @@ import java.util.Date;
 
 public class Sonderangebot {
 
-	private Long ID;
+	@Id
+	private long ID;
 
 	private int kontingent = 999;
 

@@ -8,7 +8,8 @@ import javax.persistence.Id;
 
 public abstract class Ticket {
 
-	protected Long ID;
+	@Id
+	private long ID;
 
 	protected Strecke strecke;
 

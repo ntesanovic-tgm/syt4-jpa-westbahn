@@ -2,11 +2,13 @@ package westbahn.model;
 
 import westbahn.Zahlung;
 
+import javax.persistence.Id;
 import java.util.Date;
 
 public class Reservierung {
 
-	private Long ID;
+	@Id
+	private long ID;
 
 	private Date datum;
 

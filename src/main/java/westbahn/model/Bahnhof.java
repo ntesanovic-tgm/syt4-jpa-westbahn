@@ -1,9 +1,12 @@
 package westbahn.model;
 
 
+import javax.persistence.Id;
+
 public class Bahnhof {
 
-	private Long ID;
+	@Id
+	private long ID;
 
 	private String name;
 
