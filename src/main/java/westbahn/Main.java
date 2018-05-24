@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import model.*;
+import westbahn.model.*;
 
 public class Main {
 
