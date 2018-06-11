@@ -4,20 +4,41 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
   version="2.1">
 
-  <persistence-unit name="westbahnPU">
+  <persistence-unit name="westbahn">
     <description> Hibernate JPA Configuration Example</description>
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <class>westbahn.model.Bahnhof</class>
+    <class>westbahn.model.Preisstaffelung</class>
+    <class>westbahn.model.Benutzer</class>
+    <class>westbahn.model.Einzelticket</class>
+    <class>westbahn.model.Sonderangebot</class>
+    <class>westbahn.model.Strecke</class>
+    <class>westbahn.model.Ticket</class>
+    <class>westbahn.model.Zeitkarte</class>
+    <class>westbahn.model.Zug</class>
 
     <properties>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/westbahn?useSSL=false&amp;serverTimezone=UTC&amp;createDatabaseIfNotExist=true&amp;useUnicode=yes&amp;characterEncoding=UTF-8" />
-      <property name="javax.persistence.jdbc.user" value="westbahnUser" />
-      <property name="javax.persistence.jdbc.password" value="westbahnPassword" />
-      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />
-      <property name="hibernate.show_sql" value="true" />
-      <property name="hibernate.hbm2ddl.auto" value="create-drop" />
-      <property name="hibernate.id.new_generator_mappings" value="false"/>
+      <!--<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />-->
+      <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/westbahn?useSSL=false&amp;serverTimezone=UTC&amp;createDatabaseIfNotExist=true&amp;useUnicode=yes&amp;characterEncoding=UTF-8" />-->
+      <!--<property name="dialect" value="org.hibernate.dialect.SQLiteDialect" />-->
+      <!--<property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC" />-->
+      <!--<property name="javax.persistence.jdbc.url" value="jdbc:sqlite:src/main/resources/database.db" />-->
+      <!--<property name="javax.persistence.jdbc.user" value="westbahnUser" />-->
+      <!--<property name="javax.persistence.jdbc.password" value="westbahnPassword" />-->
+      <!--<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />-->
+      <!--<property name="hibernate.show_sql" value="true" />-->
+      <!--<property name="hibernate.hbm2ddl.auto" value="create-drop" />-->
+      <!--<property name="hibernate.id.new_generator_mappings" value="false"/>-->
+
+      <property name="hibernate.connection.url" value="jdbc:sqlite:src/main/resources/database.db" />
+      <property name="hibernate.dialect" value="com.enigmabridge.hibernate.dialect.SQLiteDialect" />
+
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.show_sql" value="false"/>
+      <property name="hibernate.format_sql" value="true"/>
     </properties>
+
+
 
   </persistence-unit>
 
