@@ -2,10 +2,9 @@ package westbahn.model;
 
 public enum TicketOption {
 
-	;
 
-	public int FAHRRAD;
+	FAHRRAD,
 
-	public int GROSSGEPAECK;
+	GROSSGEPAECK;
 
 }
