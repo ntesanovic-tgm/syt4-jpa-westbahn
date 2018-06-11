@@ -1,9 +1,42 @@
 <entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_1_0.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
 	version="1.0">
-	<package>model</package>
-	<entity class="model.Reservierung" name="Reservierung" access="FIELD">
+
+	<package>westbahn.model</package>
+
+	<entity class="westbahn.model.Reservierung" name="Reservierung">
 		<table name="Reservierung"/>
+		<attributes>
+
+			<id name="ID">
+				<generated-value strategy="AUTO"/>
+			</id>
+
+			<basic name="datum"/>
+
+			<basic name="praemienMeilenBonus"/>
+
+			<basic name="preis"/>
+
+			<basic name="status"/>
+
+			<one-to-one name="zug">
+				<join-column name="ID"/>
+			</one-to-one>
+
+			<one-to-one name="strecke">
+				<join-column name="ID"/>
+			</one-to-one>
+
+			<one-to-one name="benutzer">
+				<join-column name="ID"/>
+			</one-to-one>
+
+			<transient name="zahlung"/>
+
+		</attributes>
+
 	</entity>
+
 </entity-mappings>
