@@ -2,12 +2,10 @@ package westbahn.model;
 
 public enum StatusInfo {
 
-	;
+	DELAYED,
 
-	public int DELAYED;
+	CANCELED,
 
-	public int CANCELED;
-
-	public int ONTIME;
+	ONTIME;
 
 }
