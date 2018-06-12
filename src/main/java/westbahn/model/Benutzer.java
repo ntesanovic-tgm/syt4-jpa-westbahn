@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@NamedQuery(
+		name = "Benutzer.monatskarten",
+		query = "SELECT b FROM Benutzer b LEFT JOIN b.tickets t WHERE t.typ = 'MONATSKARTE'"
+)
+
 @Entity
 public class Benutzer {
 
@@ -35,10 +40,9 @@ public class Benutzer {
 
 	@OneToMany
 	@JoinTable(
-			name = "tickets",
+			name = "benutzer_tickets",
 			joinColumns = {@JoinColumn(referencedColumnName = "id", name = "user_id")},
 			inverseJoinColumns = { @JoinColumn(referencedColumnName = "id", name = "ticket_id") })
-	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Ticket> tickets;
 
 	@OneToMany
@@ -46,13 +50,9 @@ public class Benutzer {
 			name = "benutzer_reservierungen",
 			joinColumns = {@JoinColumn(referencedColumnName = "id", name = "user_id")},
 			inverseJoinColumns = { @JoinColumn(referencedColumnName = "id", name = "reservierungs_id") })
-
 	private List<Reservierung> reservierungen;
 
-	public Benutzer() {
-		this.tickets = new ArrayList<Ticket>();
-		this.reservierungen = new ArrayList<Reservierung>();
-	}
+	public Benutzer() {}
 
 	public Benutzer(String vorName, String nachName, String eMail, String passwort, String smsNummer) {
 		this.vorName = vorName;
@@ -135,5 +135,44 @@ public class Benutzer {
 
 	public void setReservierungen(List<Reservierung> reservierungen) {
 		this.reservierungen = reservierungen;
+	}
+
+	public void addTicket(Ticket ticket){
+		this.tickets.add(ticket);
+	}
+
+	public void removeTicket(Ticket ticket){
+		this.tickets.remove(ticket);
+	}
+
+	public void addReservierung(Reservierung reservierung){
+		this.reservierungen.add(reservierung);
+	}
+
+	public void removeReservierung(Reservierung reservierung){
+		this.reservierungen.remove(reservierung);
+	}
+
+	@Override
+	public String toString() {
+		String tostring =  "Benutzer{ \n" +
+				"	ID=" + ID + ",\n" +
+				"	vorName = '" + vorName + "\', \n" +
+				"	nachName = '" + nachName + "\', \n" +
+				"	eMail = '" + eMail + "\', \n" +
+				"	passwort = '" + passwort + "\', \n" +
+				"	smsNummer = '" + smsNummer + "\', \n" +
+				"	verbuchtePraemienMeilen = " + 0 + ",\n" +
+				"	Tickets = {\n";
+		for (Ticket ticket: tickets) {
+			tostring += "		" + ticket.toString() + "\n";
+		}
+		tostring += "	}, \n";
+		tostring += "	Reservierungen = { \n";
+		for (Reservierung reservierung: reservierungen) {
+			tostring += "		" + reservierung.toString() + "\n";
+		}
+		tostring += "} \n";
+		return tostring;
 	}
 }
