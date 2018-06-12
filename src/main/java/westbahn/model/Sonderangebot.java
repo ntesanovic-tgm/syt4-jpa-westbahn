@@ -12,7 +12,6 @@ import java.util.List;
 public class Sonderangebot {
 
 	@Id
-	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long ID;
 
@@ -30,7 +29,7 @@ public class Sonderangebot {
 
 	@OneToMany
 	@JoinTable(
-			name = "tickets",
+			name = "sondertickets",
 			joinColumns = {@JoinColumn(referencedColumnName = "id", name = "user_id")},
 			inverseJoinColumns = { @JoinColumn(referencedColumnName = "id", name = "ticket_id") })
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -93,4 +92,12 @@ public class Sonderangebot {
 	public void setTickets(List<Ticket> tickets) {
 		this.tickets = tickets;
 	}
+
+    public void addTicket(Ticket ticket){
+        this.tickets.add(ticket);
+    }
+
+    public void removeTicket(Ticket ticket){
+        this.tickets.remove(ticket);
+    }
 }
