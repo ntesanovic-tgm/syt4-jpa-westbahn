@@ -5,7 +5,6 @@ import javax.persistence.*;
 public class Preisstaffelung {
 
 	@Id
-	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private static long serialVersionUID;
 

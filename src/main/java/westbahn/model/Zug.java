@@ -7,7 +7,6 @@ import java.util.Date;
 public class Zug {
 
 	@Id
-	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long ID;
 

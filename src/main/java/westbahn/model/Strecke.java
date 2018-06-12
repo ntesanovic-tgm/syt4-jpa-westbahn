@@ -6,7 +6,6 @@ import javax.persistence.*;
 public class Strecke {
 
 	@Id
-	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long ID;
 
