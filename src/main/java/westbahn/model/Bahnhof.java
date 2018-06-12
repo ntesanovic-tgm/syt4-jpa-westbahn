@@ -3,11 +3,15 @@ package westbahn.model;
 
 import javax.persistence.*;
 
+@NamedQuery(
+        name = "Bahnhof.findById",
+        query = "SELECT b FROM Bahnhof b WHERE b.ID = :bahnhof_id"
+)
+
 @Entity
 public class Bahnhof {
 
 	@Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private long ID;
 
