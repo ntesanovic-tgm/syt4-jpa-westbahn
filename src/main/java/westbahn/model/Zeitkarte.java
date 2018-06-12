@@ -44,4 +44,14 @@ public class Zeitkarte extends Ticket {
 	public void setTyp(ZeitkartenTyp typ) {
 		this.typ = typ;
 	}
+
+	@Override
+	public String toString() {
+		return "Zeitkarte{" +
+				"gueltigAb=" + gueltigAb +
+				", typ=" + typ +
+				", strecke=" + strecke +
+				", zahlung=" + zahlung +
+				'}';
+	}
 }
