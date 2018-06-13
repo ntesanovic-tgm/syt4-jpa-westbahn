@@ -32,7 +32,6 @@ public class Sonderangebot {
 			name = "sondertickets",
 			joinColumns = {@JoinColumn(referencedColumnName = "id", name = "user_id")},
 			inverseJoinColumns = { @JoinColumn(referencedColumnName = "id", name = "ticket_id") })
-	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Ticket> tickets;
 
 	public Sonderangebot() {}
