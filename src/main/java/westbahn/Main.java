@@ -4,18 +4,22 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import javax.persistence.*;
 
 //import org.apache.log4j.Level;
 //import org.apache.log4j.Logger;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import westbahn.model.*;
 
 public class Main {
 
+	private static final Logger logger = LogManager.getLogger(Main.class.getName());
 //	private static final Logger log = Logger.getLogger(Main.class);
-	private static EntityManagerFactory sessionFactory;
+//	private static EntityManagerFactory sessionFactory;
 	@PersistenceContext
 	private static EntityManager entitymanager;
 	static SimpleDateFormat dateForm = new SimpleDateFormat("dd.MM.yyyy");
@@ -28,10 +32,10 @@ public class Main {
 	public static void main(String[] args) {
 //		log.setLevel(Level.ALL);
 		try {
+
+//			sessionFactory = Persistence.createEntityManagerFactory("westbahn");
+
 //			log.info("Starting \"Mapping Perstistent Classes and Associations\" (task1)");
-			sessionFactory = Persistence.createEntityManagerFactory("westbahn");
-			
-			fillDB(entitymanager);
 			task01();
 //			log.info("Starting \"Working with JPA-QL and the Hibernate Criteria API\" (task2)");
 			task02a();
@@ -45,7 +49,7 @@ public class Main {
 	}
 	
 	public static void fillDB(EntityManager em) throws ParseException {
-		em = sessionFactory.createEntityManager();
+//		em = sessionFactory.createEntityManager();
 
 		Maestro maestro = new Maestro();
 		Kreditkarte kreditkarte = new Kreditkarte();
@@ -61,7 +65,7 @@ public class Main {
 		Benutzer benutzerMarc = new Benutzer(
 				"Marc",
 				"Rousavy",
-				"mrousavy@hotmail.com",
+				"Marc@gmail.com",
 				"hallo123",
 				"+43680123456789"
 		);
@@ -289,92 +293,155 @@ public class Main {
 		// Transactions
 
 		// Benutzer
-		transact(em, benutzerChristoph);
-		transact(em, benutzerMarc);
-		transact(em, benutzerBen);
+		saveObject(em, benutzerChristoph);
+		saveObject(em, benutzerMarc);
+		saveObject(em, benutzerBen);
 
 		// Bahnhöfe
-		transact(em, bahnhofWienWestbahnhof);
-		transact(em, bahnhofWienHuetteldorf);
-		transact(em, bahnhofSanktPoelten);
-		transact(em, bahnhofAmstetten);
-		transact(em, bahnhofLinz);
-		transact(em, bahnhofWels);
-		transact(em, bahnhofAttnangPuchheim);
-		transact(em, bahnhofSalzburg);
+		saveObject(em, bahnhofWienWestbahnhof);
+		saveObject(em, bahnhofWienHuetteldorf);
+		saveObject(em, bahnhofSanktPoelten);
+		saveObject(em, bahnhofAmstetten);
+		saveObject(em, bahnhofLinz);
+		saveObject(em, bahnhofWels);
+		saveObject(em, bahnhofAttnangPuchheim);
+		saveObject(em, bahnhofSalzburg);
 
 
 		// Strecken
-		transact(em, streckeWienWestbahnhofLinz);
-		transact(em, streckeWienHuetteldorfWels);
-		transact(em, streckeSanktPoeltenSalzburg);
-		transact(em, streckeAmstettenWels);
-		transact(em, streckeLinzAttnangPuchheim);
+		saveObject(em, streckeWienWestbahnhofLinz);
+		saveObject(em, streckeWienHuetteldorfWels);
+		saveObject(em, streckeSanktPoeltenSalzburg);
+		saveObject(em, streckeAmstettenWels);
+		saveObject(em, streckeLinzAttnangPuchheim);
 
 		// Züge
-		transact(em, zug1);
-		transact(em, zug2);
-		transact(em, zug3);
-		transact(em, zug4);
-		transact(em, zug5);
+		saveObject(em, zug1);
+		saveObject(em, zug2);
+		saveObject(em, zug3);
+		saveObject(em, zug4);
+		saveObject(em, zug5);
 
 		// Reservierungen
-		transact(em, reservierung1);
-		transact(em, reservierung2);
-		transact(em, reservierung3);
-		transact(em, reservierung4);
-		transact(em, reservierung5);
+		saveObject(em, reservierung1);
+		saveObject(em, reservierung2);
+		saveObject(em, reservierung3);
+		saveObject(em, reservierung4);
+		saveObject(em, reservierung5);
 
 		// Tickets
-		transact(em, einzelticketFahrrad);
-		transact(em, einzelticketGrossgepaeck);
-		transact(em, zeitkarteWoche);
-		transact(em, zeitkarteMonat);
-		transact(em, zeitkarteJahr);
+		saveObject(em, einzelticketFahrrad);
+		saveObject(em, einzelticketGrossgepaeck);
+		saveObject(em, zeitkarteWoche);
+		saveObject(em, zeitkarteMonat);
+		saveObject(em, zeitkarteJahr);
 
 		// Sonderangebote
-		transact(em, sonderangebot1);
-		transact(em, sonderangebot2);
-		transact(em, sonderangebot3);
-		transact(em, sonderangebot4);
-		transact(em, sonderangebot5);
+		saveObject(em, sonderangebot1);
+		saveObject(em, sonderangebot2);
+		saveObject(em, sonderangebot3);
+		saveObject(em, sonderangebot4);
+		saveObject(em, sonderangebot5);
 
 		em.getTransaction().begin();
 		benutzerChristoph.setTickets(Collections.singletonList(zeitkarteMonat));
 		benutzerChristoph.setReservierungen(Arrays.asList(reservierung1, reservierung2, reservierung5));
+		em.flush();
 		em.getTransaction().commit();
 
 		em.getTransaction().begin();
 		benutzerMarc.setTickets(Collections.singletonList(einzelticketFahrrad));
 		benutzerMarc.setReservierungen(Collections.singletonList(reservierung4));
+		em.flush();
 		em.getTransaction().commit();
 
 		em.getTransaction().begin();
 		benutzerBen.setTickets(Collections.singletonList(zeitkarteJahr));
 		benutzerBen.setReservierungen(Collections.singletonList(reservierung3));
+		em.flush();
 		em.getTransaction().commit();
 	}
 
-	public static void transact(EntityManager em, Object o){
+	public static void saveObject(EntityManager em, Object o){
 		em.getTransaction().begin();
 		em.persist(o);
+		em.flush();
 		em.getTransaction().commit();
 	}
 	
 	public static void task01() throws ParseException, InterruptedException {
-		
-		
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("westbahn");
+		EntityManager em;
+		em = factory.createEntityManager();
+		fillDB(em);
+		em.close();
+		factory.close();
 	}
-	public static void task02a() throws ParseException {
 
+	public static void task02a() throws ParseException {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("westbahn");
+		EntityManager em;
+		em = factory.createEntityManager();
+
+		String email = "christoph.pader-barosch@hotmail.com";
+		List<Reservierung> benutzerMitReservierungen = em.createNamedQuery("Reservierung.findAllUserReservationsByEmail")
+				.setParameter("email", email)
+				.getResultList();
+		for (Reservierung reservierung : benutzerMitReservierungen) {
+//			System.out.println("Reservierung für " + email + ": " + reservierung);
+			logger.info("Reservierung für " + email + ": " + reservierung);
+		}
+
+		em.close();
+		factory.close();
 	}
 
 	public static void task02b() throws ParseException {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("westbahn");
+		EntityManager em;
+		em = factory.createEntityManager();
 
+		List<Benutzer> benutzerMitMonatskarte = em.createNamedQuery("Benutzer.monatskarten").getResultList();
+		for (Benutzer benutzer : benutzerMitMonatskarte) {
+//			System.out.println("Benutzer mit Monatkarte: " + benutzer);
+			logger.info("Benutzer mit Monatkarte: " + benutzer);
+		}
+
+		em.close();
+		factory.close();
 	}
 
 	public static void task02c() throws ParseException {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("westbahn");
+		EntityManager em;
+		em = factory.createEntityManager();
 
+//		long streckeId = 12;
+//
+//		Strecke strecke = (Strecke) em.createQuery("SELECT s FROM Strecke s WHERE s.id = :id").setParameter("id", streckeId).getSingleResult();
+//
+//		Bahnhof start = strecke.getStart();
+//
+//		Bahnhof ende = strecke.getEnde();
+
+		Bahnhof start = (Bahnhof) em.createNamedQuery("Bahnhof.findById")
+				.setParameter("bahnhof_id", 5l)
+				.getSingleResult();
+		Bahnhof ende = (Bahnhof) em.createNamedQuery("Bahnhof.findById")
+				.setParameter("bahnhof_id", 9l)
+				.getSingleResult();
+		List<Ticket> ticketsOhneReservierung = em.createNamedQuery("Ticket.TicketsWithoutReservation")
+//				.setParameter("streckeID", streckeId)
+				.setParameter("start", start)
+				.setParameter("ende", ende)
+				.getResultList();
+		for (Ticket ticket : ticketsOhneReservierung) {
+//			System.out.println("Tickets ohne Reservierung für Strecke von #" + start.getID() + " und #" + ende.getID() + ": " + ticket);
+			logger.info("Tickets ohne Reservierung für Strecke von #" + start.getID() + " und #" + ende.getID() + ": " + ticket);
+		}
+
+		em.close();
+		factory.close();
 	}
 
 }
