@@ -7,6 +7,11 @@
 
 	<entity class="westbahn.model.Reservierung" name="Reservierung">
 		<table name="Reservierung"/>
+
+		<named-query name="Reservierung.findAllUserReservationsByEmail">
+			<query>SELECT r FROM Reservierung r LEFT JOIN r.benutzer b WHERE b.eMail=:email</query>
+		</named-query>
+
 		<attributes>
 
 			<id name="ID">
@@ -21,16 +26,16 @@
 
 			<basic name="status"/>
 
-			<one-to-one name="zug">
-				<join-column name="ID"/>
+			<one-to-one name="zug" fetch="EAGER">
+				<join-column name="zug"/>
 			</one-to-one>
 
 			<one-to-one name="strecke">
-				<join-column name="ID"/>
+				<join-column name="strecke"/>
 			</one-to-one>
 
 			<one-to-one name="benutzer">
-				<join-column name="ID"/>
+				<join-column name="benutzer"/>
 			</one-to-one>
 
 			<transient name="zahlung"/>
