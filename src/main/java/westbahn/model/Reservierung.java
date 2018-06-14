@@ -112,6 +112,17 @@ public class Reservierung {
 		this.zahlung = zahlung;
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Reservierung{" +
+//				"ID=" + ID +
+//				", datum=" + datum +
+//				", praemienMeilenBonus=" + praemienMeilenBonus +
+//				", preis=" + preis +
+//				", status=" + status +
+//				'}';
+//	}
+
 	@Override
 	public String toString() {
 		return "Reservierung{" +
@@ -120,6 +131,10 @@ public class Reservierung {
 				", praemienMeilenBonus=" + praemienMeilenBonus +
 				", preis=" + preis +
 				", status=" + status +
+				", zug=" + zug +
+				", strecke=" + strecke +
+//				", benutzer=" + benutzer +
+				", zahlung=" + zahlung +
 				'}';
 	}
 }
