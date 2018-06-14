@@ -373,7 +373,13 @@ public class Main {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("westbahn");
 		EntityManager em;
 		em = factory.createEntityManager();
-		fillDB(em);
+		try{
+			fillDB(em);
+		} catch (Exception ex) {
+			logger.error(ex);
+		}
+
+
 		em.close();
 		factory.close();
 	}
@@ -383,13 +389,17 @@ public class Main {
 		EntityManager em;
 		em = factory.createEntityManager();
 
-		String email = "christoph.pader-barosch@hotmail.com";
-		List<Reservierung> benutzerMitReservierungen = em.createNamedQuery("Reservierung.findAllUserReservationsByEmail")
-				.setParameter("email", email)
-				.getResultList();
-		for (Reservierung reservierung : benutzerMitReservierungen) {
-//			System.out.println("Reservierung für " + email + ": " + reservierung);
-			logger.info("Reservierung für " + email + ": " + reservierung);
+		try {
+			String email = "christoph.pader-barosch@hotmail.com";
+			List<Reservierung> benutzerMitReservierungen = em.createNamedQuery("Reservierung.findAllUserReservationsByEmail")
+					.setParameter("email", email)
+					.getResultList();
+			for (Reservierung reservierung : benutzerMitReservierungen) {
+				//			System.out.println("Reservierung für " + email + ": " + reservierung);
+				logger.info("Reservierung für " + email + ": " + reservierung);
+			}
+		} catch (Exception ex) {
+			logger.error(ex);
 		}
 
 		em.close();
@@ -401,11 +411,16 @@ public class Main {
 		EntityManager em;
 		em = factory.createEntityManager();
 
-		List<Benutzer> benutzerMitMonatskarte = em.createNamedQuery("Benutzer.monatskarten").getResultList();
-		for (Benutzer benutzer : benutzerMitMonatskarte) {
+		try{
+			List<Benutzer> benutzerMitMonatskarte = em.createNamedQuery("Benutzer.monatskarten").getResultList();
+			for (Benutzer benutzer : benutzerMitMonatskarte) {
 //			System.out.println("Benutzer mit Monatkarte: " + benutzer);
-			logger.info("Benutzer mit Monatkarte: " + benutzer);
+				logger.info("Benutzer mit Monatkarte: " + benutzer);
+			}
+		} catch (Exception ex) {
+			logger.error(ex);
 		}
+
 
 		em.close();
 		factory.close();
@@ -424,21 +439,26 @@ public class Main {
 //
 //		Bahnhof ende = strecke.getEnde();
 
-		Bahnhof start = (Bahnhof) em.createNamedQuery("Bahnhof.findById")
-				.setParameter("bahnhof_id", 5l)
-				.getSingleResult();
-		Bahnhof ende = (Bahnhof) em.createNamedQuery("Bahnhof.findById")
-				.setParameter("bahnhof_id", 9l)
-				.getSingleResult();
-		List<Ticket> ticketsOhneReservierung = em.createNamedQuery("Ticket.TicketsWithoutReservation")
+		try{
+			Bahnhof start = (Bahnhof) em.createNamedQuery("Bahnhof.findById")
+					.setParameter("bahnhof_id", 5l)
+					.getSingleResult();
+			Bahnhof ende = (Bahnhof) em.createNamedQuery("Bahnhof.findById")
+					.setParameter("bahnhof_id", 9l)
+					.getSingleResult();
+			List<Ticket> ticketsOhneReservierung = em.createNamedQuery("Ticket.TicketsWithoutReservation")
 //				.setParameter("streckeID", streckeId)
-				.setParameter("start", start)
-				.setParameter("ende", ende)
-				.getResultList();
-		for (Ticket ticket : ticketsOhneReservierung) {
+					.setParameter("start", start)
+					.setParameter("ende", ende)
+					.getResultList();
+			for (Ticket ticket : ticketsOhneReservierung) {
 //			System.out.println("Tickets ohne Reservierung für Strecke von #" + start.getID() + " und #" + ende.getID() + ": " + ticket);
-			logger.info("Tickets ohne Reservierung für Strecke von #" + start.getID() + " und #" + ende.getID() + ": " + ticket);
+				logger.info("Tickets ohne Reservierung für Strecke von #" + start.getID() + " und #" + ende.getID() + ": " + ticket);
+			}
+		} catch (Exception ex) {
+			logger.error(ex);
 		}
+
 
 		em.close();
 		factory.close();
